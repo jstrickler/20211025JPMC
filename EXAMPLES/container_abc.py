@@ -35,9 +35,13 @@ class MyIterator(Iterator):  # <9>
     data = 'a', 'b', 'c'
     index = 0
 
+    # def __iter__(self):
+    #     return self
+
+
     def __next__(self):  # <10>
         if self.index >= len(self.data):
-            raise StopIteration
+            raise StopIteration  # no more iterating...
         else:
             return_val = self.data[self.index]
             self.index += 1
@@ -50,3 +54,6 @@ for i in m:  # <12>
 print()
 
 print(hasattr(m, '__iter__'))  # <12>
+
+print(dir(m))
+

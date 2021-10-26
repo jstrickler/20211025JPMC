@@ -13,5 +13,16 @@ print(place[0], place[1])
 print(place.city, place.state)
 print(type(place))
 
+p2 = place._replace(city='Kansas City')
+print(place)
+print(p2)
+
+d = place._asdict()
+print(d)
+
+print(place._fields)
+
+
+
 
 

@@ -44,7 +44,7 @@ print('-' * 60)
 
 
 # namedtuple
-President = namedtuple('President', 'first_name, last_name, party')  # <11>
+President = namedtuple('President', 'first_name last_name party')  # <11>
 p = President('Theodore', 'Roosevelt', 'Republican')  # <12>
 print(p, len(p))
 print(p[0], p[1], p[-1])

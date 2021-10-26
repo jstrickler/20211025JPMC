@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 
+
+
 class StringKeyDict(dict):  # <1>
     def __setitem__(self, key, value):  # <2>
         if isinstance(key, str):   # <3>
@@ -24,3 +26,20 @@ if __name__ == '__main__':
 
     print()
     print(d)
+
+
+class ImmutableList(list):
+    def __setitem__(self, index, value):
+        raise TypeError("setting items not allowed")
+
+    def append(self, value):
+        raise TypeError("appending not allowed")
+
+    def insert(self, pos, value):
+        raise TypeError("inserting not allowed")
+
+foo = ImmutableList(['a', 'b', 'c'])
+print(foo)
+#foo[2] = 'wombat'
+foo.append('wombat')
+print(foo)

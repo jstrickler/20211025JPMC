@@ -24,9 +24,10 @@ print(struct)  # <2>
 print()
 
 print('With pprint:')
-pprint(struct)  # <3>
+pprint(struct, sort_dicts=False)  # <3>
 print()
 
 print('With pprint (depth=2):')
 pprint(struct, depth=2)  # <4>
 print()
+

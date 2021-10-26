@@ -2,20 +2,30 @@
 
 
 class MultiIndexList(list):  # <1>
+    """
+    List which accepts a tuple of integers as an index
 
-    def __getitem__(self, item):  # <2>
-        if isinstance(item, tuple):  # <3>
-            if len(item) == 0:
+    foo[0] or foo[1, 2, 3]
+    """
+    #     foo[indexes]     either foo[5] or foo[5, 6, 3]   :: bad tuple: foo[]
+    def __getitem__(self, indexes):  # <2>
+        if isinstance(indexes, tuple):  # <3>
+            if len(indexes) == 0:
                 raise ValueError("Tuple must be non-empty")
             else:
                 tmp_list = []
-                for index in item:
+                for index in indexes:
                     tmp_list.append(
                         super().__getitem__(index)  # <4>
                     )
                 return tmp_list
         else:
-            return super().__getitem__(item)  # <5>
+            return super().__getitem__(indexes)  # <5>
+
+    #  foo[index] = value
+    def __setitem__(self, index, value):
+        super().__setitem__(int(index), value)
+
 
 
 if __name__ == '__main__':
@@ -28,7 +38,7 @@ if __name__ == '__main__':
 
     print(m[0])
     print(m[1])
-    print(m[5, 2, 0])  # <8>
+    print("multi-index:", m[5, 2, 0])  # <8>
     print(m[:4])
     print(len(m))
     print(m[5, ])
@@ -41,3 +51,21 @@ if __name__ == '__main__':
     for fruit in m:
         print(fruit)
     print(len(fruit))
+
+    stupid_tuple = ()  # empty tuple
+
+    try:
+        print(m[stupid_tuple])
+    except Exception as err:
+        print(err)
+
+    smart_tuple = 5, 1, 2
+    print(m[smart_tuple])
+
+#    print(m['spam'])
+
+
+    m[1.2] = "cherry"
+    m["3"] = "grapefruit"
+
+    print(m)
