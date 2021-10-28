@@ -22,6 +22,7 @@ def main(args):
         # proxies={'https': 'myproxy.mycompany.com:12345'},
         # verify=False,
         # json={'foo': 'bar'},
+        # cert='path/to/cert/file',
     )  # <3>
 
     if response.status_code == requests.codes.OK:  # 200?
