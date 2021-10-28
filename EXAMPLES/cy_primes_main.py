@@ -7,9 +7,9 @@ import pyximport
 pyximport.install() # <1>
 import cy_primes # <2>
 
-NUM_PRIMES = 50000 # <3>
+NUM_PRIMES = 100000 # <3>
 
-for mod in numba_primes, cy_primes, py_primes: # <4>
+for mod in numba_primes, cy_primes: # <4>
 
     timestamp = time.time() # <5>
 
