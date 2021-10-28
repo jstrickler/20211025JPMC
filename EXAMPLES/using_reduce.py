@@ -17,7 +17,7 @@ print("result is", result)
 result = reduce(mul, values)  # <3>
 print("result is", result)
 
-strings = ['fi', 'fi', 'fo', 'fum']
+strings = ['fee', 'fi', 'fo', 'fum']
 
 # join
 result = reduce(add, strings, "") # <4>
@@ -26,3 +26,6 @@ print("result is", result)
 # join + upper case
 result = reduce(add, map(str.upper, strings), "")  # <5>
 print("result is", result)
+
+result = ''.join(s.upper() for s in strings)
+
