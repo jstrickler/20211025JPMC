@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 from pp_url_parser import url_parser  # <1>
 
 test_urls = [

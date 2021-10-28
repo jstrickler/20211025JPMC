@@ -1,5 +1,6 @@
 import sys
 import requests
+from pprint import pprint
 
 BASE_URL = 'https://www.dictionaryapi.com/api/v3/references/collegiate/json/'  # <1>
 
@@ -12,12 +13,24 @@ def main(args):
         sys.exit(1)
 
     response = requests.get(
-        BASE_URL + args[0],
-        params={'key': API_KEY},
+        BASE_URL + args[0],   # URL + search term
+        params={'key': API_KEY},  # GET parameters   foo=bar&spam=ham ....
+        # auth=(auth_name, auth_value),   #username/pw
+        # data={...},  # dict of data for POST
+        # cookies={....|,  # one or more cookies}
+        # headers={h1:v1, h2: v2},
+        # proxies={'https': 'myproxy.mycompany.com:12345'},
+        # verify=False,
+        # json={'foo': 'bar'},
     )  # <3>
 
     if response.status_code == requests.codes.OK:  # 200?
-        data = response.json()  # <4>
+        data = response.json()  # <4>  # convert JSON to python data structure
+        # data = json.loads(response.content)
+        # data.content   raw (binary) content   Unicode is encoded in .content
+        # data.text  python Unicode string  same as data.content.decode()
+        # data.json()  result of calling json.loads(response.content)
+        pprint(data)
         for entry in data: # <5>
             if isinstance(entry, dict):
                 meta = entry.get("meta")
@@ -33,6 +46,12 @@ def main(args):
 
     else:
         print("Sorry, HTTP response", response.status_code)
+
+    # with requests.Session() as session:
+    #     session.auth = ("foo", 'bar')
+    #     session.verify=false
+    #
+    #     result = session.get('http://www.python.org')
 
 if __name__ == '__main__':
     main(sys.argv[1:])

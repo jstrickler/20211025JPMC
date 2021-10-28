@@ -1,9 +1,8 @@
-#!/usr/bin/env python
-
 import os
 import asyncio
 import aiofiles
 import aiohttp
+import pdb
 
 BASE_URL = 'http://stats.nba.com/stats'
 

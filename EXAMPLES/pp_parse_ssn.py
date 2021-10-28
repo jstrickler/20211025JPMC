@@ -3,9 +3,9 @@ from pyparsing import *
 
 '''  # <1>
 grammar:
-ssn = nums+ dash nums+ dash nums+
-dash = '-'
-nums = '0' | '1' | '2' etc etc
+ssn ::= nums+ dash nums+ dash nums+
+dash ::= '-'
+nums ::= '0' | '1' | '2' etc etc
 '''
 
 dash = '-'  # <2>
@@ -21,6 +21,9 @@ ssn_parser = Combine(
 input_string = """
     xxx 215-72-8314 yyy
     102-46-6919 zzz 182-19-2201
+    barf
+    spam ham
+    224-71-8303
 """
 
 for matches, start, stop in ssn_parser.scanString(input_string):  # <5>

@@ -46,8 +46,8 @@ async def get_reddit_top(subreddit, client):
     print('-' * 60 + '\n')
 
 def signal_handler(signal, frame): # <13>
-    loop.stop()
-    client.close()
+    # loop.stop()
+    # client.close()
     sys.exit(0)
 
 

@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 import random
 import queue
-from threading import Thread, Lock as tlock
+from threading import Thread, Lock
 import time
 
-NUM_ITEMS = 25000
-POOL_SIZE = 100
+NUM_ITEMS = 100000
+POOL_SIZE = 64
 
 q = queue.Queue(0)  # <1>
 
 shared_list = []
-shlist_lock = tlock()  # <2>
-stdout_lock = tlock()  # <2>
+shlist_lock = Lock()  # <2>
+stdout_lock = Lock()  # <2>
 
 
 class RandomWord():  # <3>
@@ -29,14 +29,20 @@ class Worker(Thread):  # <4>
     def __init__(self, name):  # <5>
         Thread.__init__(self)
         self.name = name
+        self._word_count = 0
+
+    @property
+    def word_count(self):
+        return self._word_count
 
     def run(self):  # <6>
         while True:
             try:
                 s1 = q.get(block=False)  # <7>
-                s2 = s1.upper() + '-' + s1.upper()
+                s2 = s1.upper()
                 with shlist_lock:  # <8>
                     shared_list.append(s2)
+                self._word_count += 1
 
             except queue.Empty:  # <9>
                 break
@@ -45,7 +51,7 @@ class Worker(Thread):  # <4>
 # <10>
 random_word = RandomWord()
 for i in range(NUM_ITEMS):
-    w = random_word()
+    w = random_word()   # callable instance
     q.put(w)
 
 start_time = time.ctime()
@@ -60,6 +66,8 @@ for i in range(POOL_SIZE):
 
 for t in pool:
     t.join()  # <14>
+    print(t.word_count, end=';')
+print()
 
 end_time = time.ctime()
 
